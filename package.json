@@ -7,7 +7,7 @@
   "scripts": {
     "start": "npm run build && cross-env NODE_ENV=production node dist/server.js",
     "dev": "cross-env NODE_ENV=development nodemon",
-    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json"
   },
   "dependencies": {
     "@shopify/shopify-api": "^5.2.0",
@@ -31,6 +31,8 @@
     "swagger-ui-express": "^4.5.0",
     "ts-node": "^10.9.1",
     "winston": "^3.8.2",
+    "tsc": "^2.0.4",
+    "tsc-alias": "^1.6.5",
     "winston-daily-rotate-file": "^4.7.1"
   },
   "devDependencies": {
