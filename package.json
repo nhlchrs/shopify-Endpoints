@@ -4,10 +4,6 @@
   "description": "Stripe backend POC",
   "author": "",
   "license": "ISC",
-  "engines" : { 
-    "npm" : ">=8.5.0 <8.5.5",
-    "node" : ">=16.0.0 <16.14.5"
-  },
   "scripts": {
     "start": "npm run build && node dist/server.js",
     "dev": "cross-env NODE_ENV=development nodemon",
@@ -51,6 +47,7 @@
     "eslint": "^8.20.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "keyv": "^4.5.0",
     "nodemon": "^2.0.20",
     "tsconfig-paths": "^4.0.0"
   }
