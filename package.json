@@ -26,6 +26,7 @@
     "mongoose": "^6.5.0",
     "node-fetch": "^3.2.10",
     "node-fetch-commonjs": "^3.2.4",
+    "node-sass": "^8.0.0",
     "path": "^0.12.7",
     "shopify-api-node": "^3.11.3",
     "stripe": "^10.10.0",

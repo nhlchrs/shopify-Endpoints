@@ -16,9 +16,18 @@ class ShopifyRoute implements Routes {
     private initializeRoutes() {
         this.router.get(`${this.path}/product-listing`, this.shopifyController.getProducts);
         this.router.post(`${this.path}/create-customer`, validationMiddleware(CreateCustomerDto, 'body'), this.shopifyController.createCustomer);
+        this.router.get(`${this.path}/get-customer-details`, this.shopifyController.getCustomerDetails);
         this.router.get(`${this.path}/collection-listing`, this.shopifyController.getCollections);
         this.router.get(`${this.path}/collection-listing/:id`, this.shopifyController.getCollectionsDetails);
         this.router.post(`${this.path}/order-creation`, this.shopifyController.orderCreation);
+        this.router.get(`${this.path}/discount-code-details`, this.shopifyController.discountCodeDetails);
+        this.router.post(`${this.path}/send-invoice-customer`, this.shopifyController.sendInvoiceToCustomer);
+        this.router.post(`${this.path}/retrieve-discount-code-location`, this.shopifyController.retrieveDiscountCodeLocation);
+        this.router.get(`${this.path}/retrieve-discount-code-details`, this.shopifyController.retrieveDiscountCodeDetails);
+        this.router.post(`${this.path}/create-price-rule`, this.shopifyController.createPriceRuleId);
+        this.router.post(`${this.path}/price-rule-details`, this.shopifyController.ApplyCouponCode);
+
+        // this.router.post(`${this.path}/order-creation`, this.shopifyController.orderCreation);
     }
 }
 
