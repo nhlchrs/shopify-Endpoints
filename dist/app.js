@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
-const _config_1 = require("@config");
+const _config_1 = require("./config");
 const mongoose_1 = require("mongoose");
 const compression_1 = tslib_1.__importDefault(require("compression"));
 const cors_1 = tslib_1.__importDefault(require("cors"));
-const _databases_1 = require("@databases");
-const error_middleware_1 = tslib_1.__importDefault(require("@middlewares/error.middleware"));
+const _databases_1 = require("./databases");
+const error_middleware_1 = tslib_1.__importDefault(require("./middlewares/error.middleware"));
 const express_1 = tslib_1.__importDefault(require("express"));
-const logger_1 = require("@utils/logger");
+const logger_1 = require("./utils/logger");
 const swagger_jsdoc_1 = tslib_1.__importDefault(require("swagger-jsdoc"));
 const swagger_ui_express_1 = tslib_1.__importDefault(require("swagger-ui-express"));
 class App {

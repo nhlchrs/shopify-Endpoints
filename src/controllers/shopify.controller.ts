@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { shopify } from '@config';
 import { ErrorResponse, successResponseWithData } from '@/helper/apiResponse';
-
+import userModel from '@/models/users.model';
+// import productModel from '@/models/products.model';
 
 
 class ShopifyController {
@@ -20,10 +21,15 @@ class ShopifyController {
     public createCustomer = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { phone, first_name, last_name } = req.body;
-            const customer = await shopify.customer.create({ phone, first_name, last_name })
-            return successResponseWithData(res, "Data Created Successfully", customer.id);
+            const customer = await shopify.customer.create({ phone, first_name, last_name });
+            const newUser = new userModel({
+                customer_id: customer.id
+            });
+            newUser.save().then(data => {
+                return successResponseWithData(res, "Data Created Successfully", data);
+            }).catch(err => console.log(err))
         } catch (error) {
-            next(error);
+            return ErrorResponse(res, "User already Exists");
         }
     };
 
@@ -65,7 +71,11 @@ class ShopifyController {
             const { variant_id, quantity, id, code } = req.body;
             var discount_code_details, price_rule_details, new_price_value;
             if (code) {
-                discount_code_details = await shopify.discountCode.lookup({ code });
+                discount_code_details = await shopify.discountCode.lookup({ code })
+                .then(data=>{return data})
+                .catch(err=>{
+                        return ErrorResponse(res, "Code is not valid!");
+                });
                 console.log(discount_code_details)
                 price_rule_details = await shopify.priceRule.get(discount_code_details.price_rule_id);
                 new_price_value = price_rule_details.value.replace('-', '');
@@ -225,6 +235,161 @@ class ShopifyController {
             next(error);
         }
     };
+
+
+    // public webHooksProductUpdateCalls =  async (req: Request, res: Response, next: NextFunction) => {
+    //     try {
+
+
+    //         console.log("Webhook heard!",req.body,"nihal");
+            // await productModel.create( (req.body ), function (err, obj) {
+            //     if (err) {
+            //         console.log(err.message,"Nihal Erorrr")
+            //         return ErrorResponse(res, err.message);
+            //     }
+            //     else {
+            //         console.log(obj,"Nihal Erorrr")
+            //         return successResponseWithData(res, "Data Successfully Saved!",obj);
+            //     }
+            // });
+
+
+            // await productModel.create( (req.body ), function (err, obj) {
+            //     await productModel.findOneAndUpdate({ id: req.body.id }, { $set: req.body }, { returnDocument: 'after' }, (err, doc) => {
+            //     if (err) {
+            //         console.log(err.message,"Nihal Erorrr")
+            //         return ErrorResponse(res, err.message);
+            //     }
+            //     else {
+            //         console.log(doc,"Nihal Doc")
+            //         return successResponseWithData(res, "Data Successfully Saved!",doc);
+            //     }
+            // });
+            // Verify
+    //         const timestamp = Math.floor(Date.now() / 1000)
+    //         const hmac = req.header("X-Shopify-Hmac-Sha256");
+    //         const topic = req.header("X-Shopify-Topic");
+    //         const shop = req.header("X-Shopify-Shop-Domain");
+    //         console.log(hmac,"Hmachhhh")
+    //         const message = `code=202d7ddc9c72fb8622fe977e897ef3db&hmac=${hmac}&shop=${shop}&timestamp=${timestamp}`
+           
+    // const genHash = crypto.createHmac('sha256', '202d7ddc9c72fb8622fe977e897ef3db').update(JSON.stringify(req.body)).digest('base64')
+    //        console.log(genHash, " genHash");
+
+//             const verified = verifyWebhook(message, hmac);
+          
+//             if (!verified) {
+                
+// // console.log(payload,"Payloadf")
+//               console.log("Failed to verify the incoming request.");
+//               res.status(401).send("Could not verify request.");
+//               return;
+//             }
+          
+//             const data = req.body.toString();
+//             console.log(
+//               `Verified webhook request. Shop: ${shop} Topic: ${topic} \n Payload: \n ${data}`
+//             );
+          
+//             res.status(200).send("OK");
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//           console.log('🎉 We got an order!')
+//   // We'll compare the hmac to our own hash
+//   const hmac = req.get('X-Shopify-Hmac-Sha256')
+//   console.log(hmac)
+  // Use raw-body to get the body (buffer)
+//   const body = 
+// //   http.createServer(async (req, res) => {
+//    await getRawBody(req)
+//     .then((buf) => {
+//     console.log(buf,'nihalllBUfff')
+
+//       res.statusCode = 200;
+//       res.end(buf.length + ' bytes submitted');
+//     })
+//     .catch((err) => {
+//     console.log(err.message,"eroroororororo")
+
+//       res.statusCode = err.statusCode;
+//       res.end(err.message);
+//     });
+// //   });
+  
+  
+//   await getRawBody(req).then((buf) => {
+//     res.statusCode = 200;
+//     console.log(buf,'nihalllBUfff')
+
+//     res.end(buf.length + ' bytes submitted');
+//   })
+//   .catch((err) => {
+//     console.log(err.message,"eroroororororo")
+
+//     res.statusCode = err.statusCode;
+
+//     res.end(err.message);
+//   });
+//   console.log(req.body,"bodyyyy")
+// We'll compare the hmac to our own hash
+// const hmac = req.get('X-Shopify-Hmac-Sha256')
+
+// Use raw-body to get the body (buffer)
+// const body = await getRawBody(req.body)
+
+
+// const hash = crypto
+// .createHmac('sha256', secretKey)
+// .update(JSON.stringify(req.body))
+// .digest('base64')
+// console.log(hash,"niahihsihhhsihih")
+// console.log(hmac,"hmachmachmachmachmac")
+// if (hash === hmac) {
+// console.log('Phew, it came from Shopify!')
+// res.sendStatus(200)
+// } else {
+// console.log('Danger! Not from Shopify!')
+// res.sendStatus(403)
+// }
+    // } catch (error) {
+    //     next(error);
+    //     }
+    // };
+
+    // public webHooksProductCreateCalls =  async (req: Request, res: Response, next: NextFunction) => {
+    //     try {
+    //         console.log("Webhook heard!",req.body,"nihal");
+    //         await productModel.create( (req.body ), function (err, obj) {
+    //             if (err) {
+    //                 console.log(err.message,"Nihal Erorrr")
+    //                 return ErrorResponse(res, err.message);
+    //             }
+    //             else {
+    //                 console.log(obj,"Nihal Erorrr")
+    //                 return successResponseWithData(res, "Data Successfully Saved!",obj);
+    //             }
+    //         });            
+    // } catch (error) {
+    //     next(error);
+    //     }
+    // };
 }
 
 

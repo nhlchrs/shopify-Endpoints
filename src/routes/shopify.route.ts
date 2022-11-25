@@ -26,8 +26,9 @@ class ShopifyRoute implements Routes {
         this.router.get(`${this.path}/retrieve-discount-code-details`, this.shopifyController.retrieveDiscountCodeDetails);
         this.router.post(`${this.path}/create-price-rule`, this.shopifyController.createPriceRuleId);
         this.router.post(`${this.path}/price-rule-details`, this.shopifyController.ApplyCouponCode);
-
-        // this.router.post(`${this.path}/order-creation`, this.shopifyController.orderCreation);
+        // this.router.post(`/webhooks/order/create`, this.shopifyController.webHooksCalls);
+        // this.router.post(`/webhooks/products/create`, this.shopifyController.webHooksProductCreateCalls);
+        // this.router.post(`/webhooks/order/update`, this.shopifyController.webHooksProductUpdateCalls);
     }
 }
 

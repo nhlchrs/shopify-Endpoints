@@ -1,4 +1,4 @@
-import { Routes } from '@interfaces/routes.interface';
+import { Routes } from './interfaces/routes.interface';
 import express from 'express';
 declare class App {
     app: express.Application;
