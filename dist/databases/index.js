@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dbConnection = void 0;
+const _config_1 = require("../config");
 exports.dbConnection = {
-    // url: `mongodb+srv://${DB_HOST}/${DB_DATABASE}`,
-    url: "mongodb+srv://admin:dIYgKjiImtp9JsDC@cluster0.qixroy4.mongodb.net/shopping_cart",
+    url: `mongodb+srv://${_config_1.DB_HOST}/${_config_1.DB_DATABASE}`,
     options: {},
 };
 //# sourceMappingURL=index.js.map
