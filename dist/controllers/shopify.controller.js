@@ -27,7 +27,9 @@ class ShopifyController {
                 });
                 newUser.save().then(data => {
                     return (0, apiResponse_1.successResponseWithData)(res, "Data Created Successfully", data);
-                }).catch(err => console.log(err));
+                }).catch(err => {
+                    return (0, apiResponse_1.ErrorResponse)(res, err.message);
+                });
             }
             catch (error) {
                 return (0, apiResponse_1.ErrorResponse)(res, "User already Exists");
